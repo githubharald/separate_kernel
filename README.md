@@ -18,6 +18,7 @@ Example of how to use the package:
 
 ````python
 import numpy as np
+
 from separate_kernel import separate_kernel
 
 M = np.array([[1, 2, 1], [2, 4, 2], [1, 2, 1]])
@@ -25,7 +26,7 @@ res = separate_kernel(M, symmetric_kernel=True)
 
 print(f'1st 1D filter: {res.col_vec.flatten()}.T')
 print(f'2nd 1D filter: {res.row_vec.flatten()}')
-print(f'Multiplying 1st and 2nd 1D filter gives original 2D filter')
+print(f'Multiplying 1st and 2nd 1D filter gives original 2D filter:')
 print(res.col_vec @ res.row_vec)
 ````
 
@@ -34,7 +35,7 @@ This outputs:
 ````text
 1st 1D filter: [1. 2. 1.].T
 2nd 1D filter: [1. 2. 1.]
-Multiplying 1st and 2nd 1D filter gives original 2D filter
+Multiplying 1st and 2nd 1D filter gives original 2D filter:
 [[1. 2. 1.]
  [2. 4. 2.]
  [1. 2. 1.]]

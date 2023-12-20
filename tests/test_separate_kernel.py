@@ -20,7 +20,7 @@ def test_box_filter_no_constraint():
     assert all_close(res.col_vec @ res.row_vec, M)
 
 
-def test_box_filter_not_symmetric():
+def test_rect_box_filter():
     M = np.ones([2, 3])
     res = separate_kernel(M, symmetric_kernel=False)
     assert all_close(res.col_vec @ res.row_vec, M)

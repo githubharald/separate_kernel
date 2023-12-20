@@ -1,17 +1,18 @@
 from dataclasses import dataclass
+from typing import Tuple, Callable
 
 import numpy as np
 from scipy.optimize import least_squares
 
 
-def _extract_vectors(x, a_dim: int, symmetric_kernel: bool):
+def _extract_vectors(x: np.ndarray, a_dim: int, symmetric_kernel: bool) -> Tuple[np.ndarray, np.ndarray]:
     a = x[:a_dim][..., None]
     b = x[:a_dim][None, ...] if symmetric_kernel else x[a_dim:][None, ...]
     return a, b
 
 
-def _create_cost_function(M: np.ndarray, a_dim: int, symmetric_kernel: bool):
-    def cost_function(x):
+def _create_cost_function(M: np.ndarray, a_dim: int, symmetric_kernel: bool) -> Callable:
+    def cost_function(x: np.ndarray) -> np.ndarray:
         a, b = _extract_vectors(x, a_dim, symmetric_kernel)
         r = a @ b - M  # the residuals to be optimized
         return r.flatten()
@@ -26,7 +27,7 @@ class SeparatedKernel:
     error: float
 
 
-def separate_kernel(M: np.ndarray, symmetric_kernel: bool) -> SeparatedKernel:
+def separate_kernel(M: np.ndarray, symmetric_kernel: bool = False) -> SeparatedKernel:
     """
     Separate 2D kernel M into two 1D kernels C (column vector) and R (row vector).
 
